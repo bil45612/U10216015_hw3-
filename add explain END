@@ -4,15 +4,21 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 public class GUI_use_BMI extends JFrame{
+  
+  //Create text fields for name, age, weight, height
+  
   private JTextField jtfName = new JTextField();
   private JTextField jtfAge = new JTextField();
   private JTextField jtfWeight = new JTextField();
   private JTextField jtfHeight = new JTextField();
   private JTextField jtfBMI = new JTextField();
   private JTextField jtfStatus = new JTextField();
+  
+  //Create a Compute BMi button
   private JButton jbtComputeBMI = new JButton("Compute BMI");
   
   public GUI_use_BMI(){
+    //Panel p1 to hold labels and text fields
     JPanel p1 = new JPanel(new GridLayout(6,2));
     p1.add(new JLabel("Name"));
     p1.add(jtfName);
@@ -28,25 +34,32 @@ public class GUI_use_BMI extends JFrame{
     p1.add(jtfStatus);
     p1.setBorder(new TitledBorder("Enter name, age, weight (in pounds), and height(in inches)"));
     
+    //Panel p2 to hold the button
     JPanel p2 = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     p2.add(jbtComputeBMI);
     
+    //Add the panels to the frame
     add(p1, BorderLayout.CENTER);
     add(p2, BorderLayout.SOUTH);
     
+    //Register listener
     jbtComputeBMI.addActionListener(new ButtonListener());
   }
   
+  //Hanndle the Compute BMI button
   private class ButtonListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent k){
+      //Get values from text fields
       String name = jtfName.getText();
       int age = Integer.parseInt(jtfAge.getText());
       double weight = Double.parseDouble(jtfWeight.getText());
       double height = Double.parseDouble(jtfHeight.getText());
       
+      //Create a BMI object
       BMI bmi = new BMI(name, age, weight, height);
       
+      //Display BMI, and status
       jtfBMI.setText(String.format("%.1f", bmi.getBMI()));
       jtfStatus.setText(String.format(bmi.getStatus()));
     }
@@ -57,6 +70,7 @@ public class GUI_use_BMI extends JFrame{
     gui.pack();
     gui.setSize(400, 300);
     gui.setTitle("GUI_use_BMI");
+    //put the frame in the center
     gui.setLocationRelativeTo(null);
     gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     gui.setVisible(true);
@@ -67,8 +81,8 @@ class BMI{
 
   private String name;
   private int age;
-  private double weight;
-  private double height; 
+  private double weight; // in pounds
+  private double height; // in inches
   public static final double KILOGRAMS_PER_POUND = 0.45359237;
   public static final double METERS_PER_INCH = 0.0254;
   
@@ -89,6 +103,7 @@ class BMI{
     double bmi = weight * KILOGRAMS_PER_POUND / (Math.pow( ( height * METERS_PER_INCH) , 2 ) );
     return Math.round( bmi * 100) / 100.0;
   } 
+  //Compute BMI
   
   public String getStatus(){
     double bmi = getBMI();
@@ -99,9 +114,10 @@ class BMI{
     else if (bmi < 30)
       return "Overweight";
     else 
-      return "Obese";
+      return "obese";
   }
- 
+  //Distingush the status
+  
   public String getName(){
     return name;
   }
