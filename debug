@@ -32,7 +32,9 @@ public class GUI_use_BMI extends JFrame{
     p2.add(jbtComputeBMI);
     
     add(p1, BorderLayout.CENTER);
-    add(p2, BorderLayout.south);
+    add(p2, BorderLayout.SOUTH);
+    
+    jbtComputeBMI.addActionListener(new ButtonListener());
   }
   
   private class ButtonListener implements ActionListener{
@@ -60,6 +62,7 @@ public class GUI_use_BMI extends JFrame{
     gui.setVisible(true);
   }
 }
+
 class BMI{
 
   private String name;
